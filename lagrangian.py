@@ -4,6 +4,14 @@ from IPython.display import display, Math
 
 class solver:
     def __init__(self, n, lagrangian, custom_coords=None):
+        '''
+        Creates a solver class for obtaining the Euler Lagrange equations of motion and Hamiltonian equations of motion, given a Lagrangian. 
+        
+        Parameters -
+        n: number of generalised position coordinates
+        lagrangian: lagrangian function, MUST have 2*n arguments, first n being the n generalised positions and the next n being the n generalised velocities
+        custom_coords: list of custom position coordinates, if not provided, defaults to q_1, q_2, ..., q_n
+        '''
         sig = signature(lagrangian)
         self.system_name = lagrangian.__name__.replace('_',' ')
         lagrangian_args = len(sig.parameters)
@@ -41,6 +49,13 @@ class solver:
         return dexpr_dt
 
     def euler_lagrange_equations(self, latex=True, pretty_diffs = True):
+        '''
+        Returns the Euler Lagrange equations of motion.
+
+        Parameters - 
+        latex (defaults to True): if True, returns equations as latex strings, else returns sympy equations objects
+        pretty_diffs (defaults to True): if True, returns equations with latex format derivates, i.e. \dot{<coord>} and \ddot{<coord>} as opposed to d<coord> and dd<coord>.
+        '''
         equations = []
         lagrangian = self.__get_lagrangian()
         for i in range(self.n):
@@ -59,6 +74,14 @@ class solver:
         return equations
     
     def get_second_derivatives(self, latex=True, pretty_diffs = True, simplify = False):
+        '''
+        Solves the system of Euler Lagrange equations for the second derivatives of the generalised coordinates (i.e. accelarations).
+
+        Parameters -
+        latex (defaults to True): if True, returns equations as latex strings, else returns sympy equations objects
+        pretty_diffs (defaults to True): if True, returns equations with latex format derivates, i.e. \dot{<coord>} and \ddot{<coord>} as opposed to d<coord> and dd<coord>.
+        simplify (defaults to False): if True, simplifies the final equations for the accelarations, else lets them be as it is.  
+        '''
         equations = self.euler_lagrange_equations(latex=False, pretty_diffs=False)
         sol = sympy.solve(equations, self.ddq, dict=True)[0]
         second_derivatives = [sympy.Eq(self.ddq[i], sol[self.ddq[i]]) for i in range(self.n)]
@@ -88,6 +111,13 @@ class solver:
         return H
     
     def hamitonian_equations(self, latex=True, pretty_diffs = True):
+        '''
+        Calculates Hamiltonian from the Lagrangian and rettains the Hamiltonian equations of motion.
+
+        Parameters -
+        latex (defaults to True): if True, returns equations as latex strings, else returns sympy equations objects
+        pretty_diffs (defaults to True): if True, returns equations with latex format derivates, i.e. \dot{<coord>} and \dot{p_{<coord>}} as opposed to d<coord> and dp_<coord>.
+        '''
         p_eqs = []
         q_eqs = [] 
         H = self.__get__hamiltonian()
@@ -107,6 +137,13 @@ class solver:
         return p_eqs, q_eqs
     
     def print_lagrangian(self, pretty_diffs=True, display_name = True):
+        '''
+        Prints the Lagrangian of the system.
+
+        Parameters -
+        pretty_diffs (defaults to True): if True, returns equations with latex format derivates, i.e. \dot{<coord>} and \ddot{<coord>} as opposed to d<coord> and dd<coord>.
+        display_name (defaults to True): if True, prints the name of the lagrangian function passed to the object (i.e. if the object is created with solver(n, lagrangian=Lagrangian_of_the_system), then the name will be 'Lagrangian of the system'.
+        '''
         lagrangian = sympy.Eq(sympy.Symbol('\mathcal{L}'), self.__get_lagrangian())
         if pretty_diffs:
             subs_dict = {}
@@ -119,6 +156,13 @@ class solver:
         pprint(sympy.latex(lagrangian))
 
     def print_hamiltonian(self, pretty_diffs=True, display_name = True):
+        '''
+        Prints the Hamiltonian of the system.
+        
+        Parameters -
+        pretty_diff (defaults to True): if True, returns equations with latex format derivates, i.e. \dot{<coord>} and \dot{p_{<coord>}} as opposed to d<coord> and dp_<coord>.
+        display_name (defaults to True): if True, prints the name of the lagrangian function passed to the object (i.e. if the object is created with solver(n, lagrangian=Lagrangian_of_the_system), then the name will be 'Lagrangian of the system'.
+        '''
         hamiltonian = sympy.Eq(sympy.Symbol('\mathcal{H}'), self.__get__hamiltonian())
         if pretty_diffs:
             subs_dict = {}
