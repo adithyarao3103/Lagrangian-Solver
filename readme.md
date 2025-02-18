@@ -18,7 +18,13 @@ Sympy implementation of solver class with methods for solving Lagrangian and Ham
 from lagrangian import solver, pprint
 import sympy
 
-# Example: Simple Harmonic Oscillator, the Lagrangian function argument MUST be of the format (q1, q2, ..., dq1, dq2, ...) even if the coordinates are not used
+"""
+Example: Simple Harmonic Oscillator
+The Lagrangian function's argument MUST be of the format 
+(q1, q2, ..., dq1, dq2, ...) 
+even if the coordinates are not used
+"""
+
 def harmonic_oscillator(q, dq):
     m = sympy.Symbol('m')
     k = sympy.Symbol('k')
