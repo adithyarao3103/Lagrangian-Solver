@@ -62,7 +62,7 @@ system.print_hamiltonian()
 - `print_hamiltonian(pretty_diffs=True, display_name=True)`: Displays the Hamiltonian
 - `hamitonian_equations(latex=True, pretty_diffs=True)`: Returns Hamilton's equations
 
-## Check out the example notebooks:
+## Check out the example notebooks
 
 - [simple_examples.ipynb](simple_examples.ipynb) - Basic mechanical systems
 - [more_examples.ipynb](more_examples.ipynb) - Advanced applications
