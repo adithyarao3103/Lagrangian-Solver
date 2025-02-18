@@ -1,3 +1,8 @@
+'''
+Provides a solver class for obtaining the Euler Lagrange equations of motion and Hamiltonian equations of motion, given a Lagrangian.
+Also provides a function pprint for pretty printing of latex strings returned by sympy.
+'''
+
 import sympy
 from inspect import signature
 from IPython.display import display, Math
