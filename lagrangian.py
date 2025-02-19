@@ -181,6 +181,9 @@ class solver:
 
     
 def pprint(equation):
-    display(Math(equation))        
+    if type(equation) == str:
+        display(Math(equation))
+    else:
+        display(Math(sympy.latex(equation)))        
 
 
