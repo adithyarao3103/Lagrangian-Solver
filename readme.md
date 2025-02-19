@@ -53,6 +53,7 @@ pprint(q_eqs[0])
 system.print_hamiltonian()
 
 ```
+![alt text](image.png)
 
 ## Class Methods
 
