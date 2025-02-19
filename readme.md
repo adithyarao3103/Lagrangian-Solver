@@ -12,6 +12,11 @@ Sympy implementation of solver class with methods for solving Lagrangian and Ham
 - Support for custom coordinate variables
 - Handles n-dimensional mechanical systems
 
+>[!Important]
+>The Lagrangian function's argument MUST be of the format (q1, q2, ..., qn, dq1, dq2, ..., dqn) even if the coordinates are not used.
+>
+> Also, the pprint function for pretty printing Sympy output works only in a notebook and not in terminal.
+
 ## Usage Example
 
 ```python
