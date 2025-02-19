@@ -184,6 +184,9 @@ def pprint(equation):
     if type(equation) == str:
         display(Math(equation))
     else:
-        display(Math(sympy.latex(equation)))        
+        try:
+            display(Math(sympy.latex(equation))) 
+        except Exception as e:
+            raise e        
 
 
